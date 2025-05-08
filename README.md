@@ -10,12 +10,3 @@ docker compose up --build
 ```
 docker compose down -v
 ```
-- username n8n
-- - username
-```
-razeroffline@gmail.com
-```
-- - password
-```
-Password1988
-```
