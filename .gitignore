@@ -1,2 +1,2 @@
-./n8n_volumes
-./mysql_volumes
+/mysql_volumes
+/n8n_volumes
