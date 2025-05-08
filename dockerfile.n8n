@@ -1,0 +1,8 @@
+FROM n8nio/n8n:1.89.2
+
+COPY ./N8N_RestApi_Mysql_Example.json /home/node/workflows/
+COPY ./start-n8n.sh /home/node/start-n8n.sh
+USER root
+RUN chmod +x /home/node/start-n8n.sh
+USER node
+ENTRYPOINT ["/home/node/start-n8n.sh"]

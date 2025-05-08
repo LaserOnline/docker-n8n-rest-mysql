@@ -1,0 +1,370 @@
+{
+  "name": "N8N RestApi Mysql Example",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n  const msg = item.json.body?.message || 'no message';\n\n  return {\n    json: {\n      message: msg\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        120,
+        -40
+      ],
+      "id": "90b24e88-b89c-42c1-b01e-b122cb82adf6",
+      "name": "Logic"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      items: $input.all().map(item => item.json)\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        340,
+        340
+      ],
+      "id": "7d09d25a-bd09-4fcd-a8aa-6ec64a061968",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "content": "Http Method Post\nsend data message Insert Mysql\nResponse boolean",
+        "height": 120,
+        "width": 250,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        -200
+      ],
+      "id": "5c6755a6-73ad-4d3a-8dad-850017606087",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Http Method GET\nQuery Select * FROM Table Databases\nResponse Data",
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        140
+      ],
+      "id": "cc94c010-dafc-482b-830a-e5343c5494ba",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "DELETE",
+        "path": "remove/all",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -100,
+        720
+      ],
+      "id": "f7124a50-99d0-4711-b10c-1bbdb780481a",
+      "name": "Request Remove Databases All",
+      "webhookId": "f94f72d2-b1fa-4a36-be05-ebc85833296e"
+    },
+    {
+      "parameters": {
+        "table": {
+          "__rl": true,
+          "value": "data_message",
+          "mode": "list",
+          "cachedResultName": "data_message"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        340,
+        -40
+      ],
+      "id": "c43b579d-e569-497d-a962-e16f8046291f",
+      "name": "Insert Databases",
+      "credentials": {
+        "mySql": {
+          "id": "IsOfnzhcivtyopns",
+          "name": "MySQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": {
+          "__rl": true,
+          "value": "data_message",
+          "mode": "list",
+          "cachedResultName": "data_message"
+        },
+        "returnAll": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        120,
+        340
+      ],
+      "id": "be016b63-35f3-4b2d-a9cc-101f2456abcf",
+      "name": "Query Databases",
+      "credentials": {
+        "mySql": {
+          "id": "IsOfnzhcivtyopns",
+          "name": "MySQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      message: \"delete successfully\"\n    }\n  }\n]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        360,
+        720
+      ],
+      "id": "ee69ba0f-23e0-49fc-8099-b2e585d487a4",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        600,
+        720
+      ],
+      "id": "638aa3ea-2431-4be4-959c-2af69d35849f",
+      "name": "Response Method Delete"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        340
+      ],
+      "id": "12b46fd7-2fc2-4f20-be74-bf6b1b7e1ffe",
+      "name": "Response Method Get"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        -40
+      ],
+      "id": "bbf6a19d-9eb0-4cb0-832b-044e154e9c66",
+      "name": "Response Method Post"
+    },
+    {
+      "parameters": {
+        "content": "Http Method Delete\nDrop Databases Table\nResponse Message\nIf Success\nShow Message Delete Successflly",
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        520
+      ],
+      "id": "b90ea69b-dd68-414b-906f-cf6a2b9cee36",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "create",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -100,
+        -40
+      ],
+      "id": "926de03e-96d6-4393-88f8-34f430b3fc5a",
+      "name": "Request Create Data",
+      "webhookId": "a6134374-832a-42d6-892b-d012c3e0749c"
+    },
+    {
+      "parameters": {
+        "path": "data",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -100,
+        340
+      ],
+      "id": "da17b900-a193-4f80-beb6-d3024e78fe41",
+      "name": "Request Get Data",
+      "webhookId": "4dcba20d-e5be-4817-ac2e-233e2afb13b9"
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "table": {
+          "__rl": true,
+          "value": "data_message",
+          "mode": "list",
+          "cachedResultName": "data_message"
+        },
+        "deleteCommand": "delete",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        140,
+        720
+      ],
+      "id": "56031662-842f-41d7-88aa-15c98a14b00e",
+      "name": "Delete Data",
+      "credentials": {
+        "mySql": {
+          "id": "IsOfnzhcivtyopns",
+          "name": "MySQL account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Logic": {
+      "main": [
+        [
+          {
+            "node": "Insert Databases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Response Method Get",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Remove Databases All": {
+      "main": [
+        [
+          {
+            "node": "Delete Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Databases": {
+      "main": [
+        [
+          {
+            "node": "Response Method Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Databases": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Response Method Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Create Data": {
+      "main": [
+        [
+          {
+            "node": "Logic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Request Get Data": {
+      "main": [
+        [
+          {
+            "node": "Query Databases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Data": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4a370562-4ee5-4af3-bf99-c1a5ebad9916",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3ab41c9a862c2883a56f64d7b64f1c7744c3e2f2f35fa97e5a3c71767286b428"
+  },
+  "id": "FAIvauAsh88bz7tc",
+  "tags": []
+}

@@ -1,0 +1,41 @@
+services:
+  databases-mysql:
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: dockerfile.mysql
+    environment:
+      MYSQL_DATABASE: my_databases
+    env_file:
+      - .env
+    volumes:
+      - ${MYSQL_PATH_VOLUMES}:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  phpmyadmin:
+    container_name: phpmyadmin
+    build:
+      context: .
+      dockerfile: dockerfile.phpmyadmin
+    environment:
+      PMA_HOST: mysql
+    env_file:
+      - .env
+    ports:
+      - "8080:80"
+    depends_on:
+      - databases-mysql
+  n8n:
+    build:
+      context: .
+      dockerfile: dockerfile.n8n
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    volumes:
+      - ${N8N_PATH_VOLUMES}:/home/node/.n8n
+    depends_on:
+      - databases-mysql
+      - phpmyadmin
+    env_file:
+      - .env
