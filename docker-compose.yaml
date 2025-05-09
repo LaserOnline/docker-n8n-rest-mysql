@@ -10,6 +10,7 @@ services:
       - .env
     volumes:
       - ${MYSQL_PATH_VOLUMES}:/var/lib/mysql
+      - ./upload_data:/docker-entrypoint-initdb.d/
     ports:
       - "3306:3306"
   phpmyadmin:
